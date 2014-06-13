@@ -1,7 +1,3 @@
 {
-  "pages" : [{
-    "name":"Abstract",
-    "file":"abstract.html" 
-    }   
-  ]
+  "stuff" : "specific string"
 }
