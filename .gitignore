@@ -4,3 +4,4 @@ vendor
 *.sublime-workspace
 npm-debug.log
 compiled.pdf
+docs_compiled
