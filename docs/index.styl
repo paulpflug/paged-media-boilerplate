@@ -1,0 +1,152 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../vendor/font-awesome/fonts/fontawesome-webfont.eot');
+  src: url('../vendor/font-awesome/fonts/fontawesome-webfont.woff') format('woff'), url('../vendor/font-awesome/fonts/fontawesome-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+colorChapter = #981868
+colorSection = #008498
+colorSubSection = #777
+fontChapter = "Amerika"
+fontSection = "DejaVu Sans Mono"
+@page 
+  size: A4;
+  margin: 27mm 16mm 27mm 16mm;
+  
+
+@page :left { 
+  margin-left:1.5cm; margin-right:2cm  
+}
+@page :right { 
+  margin-left:2cm; margin-right:1.5cm  
+}
+.newCounter
+  counter-reset: page 
+  page: empty
+h2:before
+  content:  counter(chapter)" | " 
+
+h2 
+  font-family fontChapter
+  color: colorChapter
+  page-break-before: right
+  string-set: chapter content()
+  counter-reset: section
+  counter-reset: figure
+  counter-increment: chapter
+  font-size:xx-large
+h3:before 
+  content: counter(chapter) "." counter(section) " "
+
+h3 
+  font-family fontSection
+  color: colorSection
+  counter-increment: section
+  string-set: section content()
+  font-size:x-large
+h5 
+  color colorSubSection
+  border-bottom: 1px colorSubSection solid
+  width: 66%
+  font-size:large
+h1, h2, h3, h4, h5, h6 
+ page-break-after: avoid
+ clear:both
+
+h2 { bookmark-level: 1 }
+h3 { bookmark-level: 2 }
+h5 { bookmark-level: 3 }
+
+
+@page empty 
+  @top-right 
+    content: normal 
+  @top-left 
+    content: normal  
+  @bottom-right 
+    content: normal
+  @bottom-left 
+    content: normal
+.emptyPage
+  page: empty
+  page-break-after: always
+
+@page :first 
+  @top-right 
+    content: normal 
+  @top-left 
+    content: normal 
+
+@page :left 
+  @top-left
+    font-family fontSection
+    color: colorSection
+    content: counter(chapter) "." counter(section) " " string(section)
+    
+  @bottom-left 
+    content: counter(page)
+  
+@page :right 
+  @top-right 
+    font-family fontChapter
+    color: colorChapter
+    content: counter(chapter) " | " string(chapter)
+  @bottom-right 
+    content: counter(page)
+
+.front-matter
+  page: front-matter
+.front-matter h2:before
+  content:  ""
+@page front-matter:left 
+  @top-right 
+    content: normal 
+  @top-left 
+    content: normal 
+  @bottom-left 
+    content: counter(page, lower-roman)
+@page front-matter:right 
+  @top-right 
+    content: normal 
+  @top-left 
+    content: normal 
+  @bottom-right 
+    content: counter(page, lower-roman)  
+
+body
+  background-color: #fff
+  text-align justify
+#toc ul
+  list-style-type: none;
+  margin 0
+  padding-left 0px
+#toc>ul
+  padding-left 20px
+#toc ul a::after 
+  content: leader(' . ') target-counter(attr(href), page);
+
+img 
+  image-resolution: from-image;
+  margin 0px 
+figcaption:before
+  content: "Fig." counter(chapter) "." counter(figure) " "
+  font-weight: bold
+a.fig
+  content "Fig."
+  font-weight: bold
+a.fig::after 
+  content: target-counter(attr(href), chapter) "." target-counter(attr(href), figure) " "
+figure
+  margin 5px 0 20px 0
+  counter-increment: figure
+
+figure.pull-left
+  margin-right 15px
+figure.pull-right
+  margin-left 15px
+p 
+  margin: 0 0 10px
+a
+  color #000
+  text-decoration: none

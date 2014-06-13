@@ -1,0 +1,10 @@
+{
+  "name": "paged media boilerplate",
+  "version": "0.0.1",
+  "dependencies": {
+    "font-awesome": "~4.1.0"
+  },
+  "devDependencies": {
+
+  }
+}
