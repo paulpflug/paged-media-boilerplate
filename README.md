@@ -13,7 +13,7 @@ and converting with [Prince][prince]
 
 ### Setting up prince 
 
-Download and install prince from the [project page][prince_dl].
+Download and install prince from their [page][prince_dl].
 
 Make sure `prince` is accessible from your `PATH` (Try `prince ` in your Terminal). 
 
@@ -25,17 +25,20 @@ run
 ```
 npm install
 bower install
-
 ```
 
 [prince]: http://www.princexml.com/
 [prince_dl]: http://www.princexml.com/download/
 
 ## Documentation
-`grunt` will compile Jade/Stylus/Coffeescript to HTML/CSS/JS and watch for changes. 
-The document is served to `localhost:9000`. 
-***Note:*** Several CSS 3 features are not supported by any browser. (Margins, Pagesize, ...)
+`grunt` will compile Jade/Stylus/Coffeescript to HTML/CSS/JS and watch for changes.
+ 
+The document is served to `localhost:9000`.
+
 HTML/CSS/JS will also be converted to `compiled.pdf` by [Prince][prince], which supports the required CSS 3 features.
+
+***Note:*** Several CSS 3 features are not supported by any browser. (Margins, Pagesize, ...)
+
 
 
 ## Release History
