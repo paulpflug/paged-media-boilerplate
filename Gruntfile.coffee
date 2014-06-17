@@ -28,10 +28,13 @@ module.exports = (grunt) ->
         tasks: ["newer:coffee","prince"]
       jade:
         files: ["docs/**/*.jade"]
-        tasks: ["newer:jade","prince"]
+        tasks: ["jade","prince"]
       stylus:
         files: ["docs/**/*.styl"]
         tasks: ["newer:stylus","prince"]
+      bower:
+        files: ["bower.json"]
+        tasks: ["bowerInstall"]
       gruntfile:
         files: ["Gruntfile.coffee"]
         tasks: [
@@ -114,7 +117,10 @@ module.exports = (grunt) ->
       compile:
         files: 
           "./compiled.pdf": ["docs_compiled/index.html"]
-        
+    
+    bowerInstall:
+      target:
+        src: ["docs/index.jade"]   
      
     # Run some tasks in parallel to speed up the build process
     concurrent:
@@ -123,6 +129,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "default", [
     "clean:compile"
+    "bowerInstall"
     "concurrent"
     "prince"
     "watch"

@@ -1,8 +1,9 @@
 {
   "name": "paged media boilerplate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
-    "font-awesome": "~4.1.0"
+    "font-awesome": "*",
+    "jquery": "*"
   },
   "devDependencies": {
 

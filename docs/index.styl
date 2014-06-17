@@ -1,41 +1,71 @@
-@font-face {
-  font-family: 'FontAwesome';
-  src: url('../vendor/font-awesome/fonts/fontawesome-webfont.eot');
-  src: url('../vendor/font-awesome/fonts/fontawesome-webfont.woff') format('woff'), url('../vendor/font-awesome/fonts/fontawesome-webfont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 colorChapter = #981868
 colorSection = #008498
+colorBody = #FFF
 colorSubSection = #777
-fontChapter = "Amerika"
-fontSection = "DejaVu Sans Mono"
+colorGrey = #DDD
+fontChapter = "Anonymous pro"
+fontSection =  "Artifika"
+fontHeading = "Architects Daughter"
+fontBody = "source code pro"
+fontSizeBody = small
+fontSizeHeading = medium
+fontSizeSection = large
+fontSizeChapter = 80px
+fontSizeChapterFront = 60px
+outerMargin = 25mm
 @page 
   size: A4;
   margin: 27mm 16mm 27mm 16mm;
-  
-
+  font-family: fontBody
+  background-color: colorBody
+  font-size: fontSizeBody
+.container
+  background-color: colorBody
+  width: 21cm - (2*outerMargin)
+  margin: auto
+  padding: 27mm outerMargin 27mm outerMargin
+body
+  font-family: fontBody
+  background-color: colorGrey
+  text-align justify
+  font-size: fontSizeBody
+@media print
+  .container
+    width: 100%
+    margin: 0
+    padding: 0
+  body
+    background-color: colorBody
 @page :left { 
-  margin-left:1.5cm; margin-right:2cm  
+  margin-left:outerMargin + 5mm; margin-right:outerMargin - 5mm 
 }
 @page :right { 
-  margin-left:2cm; margin-right:1.5cm  
+  margin-left:outerMargin - 5mm; margin-right:outerMargin + 5mm 
 }
 .newCounter
   counter-reset: page 
   page: empty
-h2:before
-  content:  counter(chapter)" | " 
-
+h2:after
+  content:  counter(chapter)
+  display: block
+  z-index -1
+  font-size: 350px
+  position: absolute
+  right: 30px
+  top: -120px
+  color: rgba(colorChapter,0.2)
 h2 
   font-family fontChapter
+  font-weight: bold
   color: colorChapter
   page-break-before: right
   string-set: chapter content()
-  counter-reset: section
-  counter-reset: figure
+  counter-reset: figure section
   counter-increment: chapter
-  font-size:xx-large
+  font-size:fontSizeChapter
+  position: relative
+  margin-top:35px
+  margin-bottom: 70px
 h3:before 
   content: counter(chapter) "." counter(section) " "
 
@@ -44,15 +74,16 @@ h3
   color: colorSection
   counter-increment: section
   string-set: section content()
-  font-size:x-large
+  font-size:fontSizeSection
 h5 
   color colorSubSection
   border-bottom: 1px colorSubSection solid
-  width: 66%
-  font-size:large
+  font-size:fontSizeHeading
+  font-family fontHeading
+  padding-bottom: 1px
+  margin-bottom: 6px
 h1, h2, h3, h4, h5, h6 
  page-break-after: avoid
- clear:both
 
 h2 { bookmark-level: 1 }
 h3 { bookmark-level: 2 }
@@ -97,8 +128,13 @@ h5 { bookmark-level: 3 }
 
 .front-matter
   page: front-matter
-.front-matter h2:before
+  font-size: fontSizeHeading
+.front-matter h2
+  font-size: fontSizeChapterFront
+.front-matter h2:before,
+.front-matter h2:after
   content:  ""
+  
 @page front-matter:left 
   @top-right 
     content: normal 
@@ -114,9 +150,7 @@ h5 { bookmark-level: 3 }
   @bottom-right 
     content: counter(page, lower-roman)  
 
-body
-  background-color: #fff
-  text-align justify
+
 #toc ul
   list-style-type: none;
   margin 0
@@ -140,13 +174,47 @@ a.fig::after
 figure
   margin 5px 0 20px 0
   counter-increment: figure
-
+  background-color: colorBody
 figure.pull-left
-  margin-right 15px
+  padding-right 15px
 figure.pull-right
-  margin-left 15px
-p 
-  margin: 0 0 10px
+  padding-left 15px
+p,ul, li.toc.chapter
+  margin-bottom: 10px
+  margin-top: 0px
+  page-break-inside:avoid;
 a
   color #000
   text-decoration: none
+blockquote
+  margin: 0.75em 0
+  padding: 0.75em 60px
+  position: relative
+  font-size: fontSizeHeading
+
+blockquote:before 
+  display: block
+  content: "\201C"
+  font-size: 60px
+  position: absolute
+  font-style: italic
+  left: 8px
+  top: -10px
+  color: colorSubSection
+blockquote cite
+  color: colorSubSection
+  font-size: fontSizeBody
+blockquote cite:before 
+  content: "\2014"
+  padding-right: 10px
+
+ul
+  padding-left: 30px
+  margin-left: 0
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../vendor/font-awesome/fonts/fontawesome-webfont.eot');
+  src: url('../vendor/font-awesome/fonts/fontawesome-webfont.woff') format('woff'), url('../vendor/font-awesome/fonts/fontawesome-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

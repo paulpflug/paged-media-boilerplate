@@ -4,50 +4,38 @@ createLink = (href, innerHTML) ->
   a.innerHTML = innerHTML
   return a
 window.generateTOC = () ->
-  i2 = 0
-  i3 = 0
-  i4 = 0
   toc = document.getElementById("toc")
   toc = toc.appendChild(document.createElement("ul"))
-  i = 0
-  while i < document.body.childNodes.length
-    node = document.body.childNodes[i]
-    tagName = node.nodeName.toLowerCase()
-    if tagName is "h4"
-      ++i4
-      if i4 is 1
-        toc.lastChild.lastChild.lastChild.appendChild document.createElement("ul")  
-      section = i2 + "." + i3 + "." + i4
-      node.id = "section" + section
-      li = document.createElement("li")
-      att = document.createAttribute("class")
-      att.value = "toc subsection"
-      li.setAttributeNode att
-      li.appendChild createLink("#section" + section, section+" "+node.innerHTML)
-      toc.lastChild.lastChild.lastChild.lastChild.appendChild li
-    else if tagName is "h3"
-      ++i3
-      i4 = 0
-      if i3 is 1
-        toc.lastChild.appendChild document.createElement("ul")  
-      section = i2 + "." + i3
-      node.id = "section" + section
+  $(":not(.front-matter) > h2").each (chapter) ->
+    chapter++
+    $(this).attr("id","chapter" + chapter)
+    li = document.createElement("li")
+    att = document.createAttribute("class")
+    att.value = "toc chapter"
+    li.setAttributeNode att
+    li.appendChild createLink("#chapter" + chapter, chapter+" "+$(this).html())
+    toc.appendChild li
+    ulchapter = document.createElement("ul")
+    li.appendChild ulchapter
+    $(this).nextUntil("h2","h3").each (section) ->
+      section++
+      section = chapter + "."+ section
+      $(this).attr("id","section" + section)
       li = document.createElement("li")
       att = document.createAttribute("class")
       att.value = "toc section"
       li.setAttributeNode att
-      li.appendChild createLink("#section" + section, section+" "+node.innerHTML)
-      toc.lastChild.lastChild.appendChild li
-    else if tagName is "h2"
-      ++i2
-      i3 = 0
-      i4 = 0
-      section = i2
-      node.id = "section" + section
-      li = document.createElement("li")
-      att = document.createAttribute("class")
-      att.value = "toc chapter"
-      li.setAttributeNode att
-      li.appendChild createLink("#section" + section, section+" "+node.innerHTML)
-      toc.appendChild li
-    ++i
+      li.appendChild createLink("#section" + section, section+" "+$(this).html())
+      ulchapter.appendChild li
+      ulsection = document.createElement("ul")
+      li.appendChild ulsection
+      $(this).nextUntil("h3","h4").each (subsection) ->
+        subsection++
+        subsection = section+"." +subsection
+        $(this).attr("id","subsection" + subsection)
+        li = document.createElement("li")
+        att = document.createAttribute("class")
+        att.value = "toc subsection"
+        li.setAttributeNode att
+        li.appendChild createLink("#subsection" + subsection, subsection+" "+$(this).html())
+        ulsection.appendChild li
