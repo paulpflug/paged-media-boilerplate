@@ -47,9 +47,18 @@ npm install
 bower install
 ```
 
+on Windows you maybe have to do the following:
+```
+cd .\node_modules\grunt-jsdom-jquery\node_modules\jsdom\node_modules\contextify
+node-gyp rebuild
+```
+make sure you have python 2.7 installed. For further info see [jsdom](https://github.com/tmpvar/jsdom).
+
 [prince]: http://www.princexml.com/
 [prince_dl]: http://www.princexml.com/download/
 [grunt-jsdom-jquery]: https://github.com/paulpflug/grunt-jsdom-jquery
+
+
 ## Documentation
 `grunt` will compile Jade/Stylus/Coffeescript to HTML/CSS/JS and watch for changes.
 

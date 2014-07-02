@@ -5,3 +5,4 @@ vendor
 npm-debug.log
 compiled.pdf
 docs_compiled
+build
