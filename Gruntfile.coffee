@@ -2,12 +2,15 @@
 "use strict"
 path = require "path"
 util = require "util"
+fs = require "fs"
+
+
 
 module.exports = (grunt) ->
   
   # Load grunt tasks automatically
   require("load-grunt-tasks") grunt
-    # Time how long tasks take. Can help when optimizing build times
+  # Time how long tasks take. Can help when optimizing build times
   require("time-grunt") grunt
   process.env.dirname = __dirname
   # Define the configuration for all the tasks
@@ -19,22 +22,46 @@ module.exports = (grunt) ->
       # configurable paths
       livereload: 35729
 
+    jsdom:
+      options:
+        src: [
+          grunt.file.read("resources/scripts/jquery-hyphen.js")
+          grunt.file.read("resources/scripts/en-us.js")
+          
+        ]
+        functions: [
+          "toc"
+          "tot"
+          "tof"
+          "bib"
+          () -> this.$('p').hyphenate('en-us');
+        ]
+        bib:
+          patterns:
+            "docs": "docs_compiled"
+            ".bib": /.html/i
+      compile:
+        files: [
+          expand: true,
+          cwd: "docs_compiled/",
+          src: ["index.html"],
+          ext: ".html",
+          dest: "docs_compiled/"          
+        ]
+
     # Watches files for changes and runs tasks based on the changed files
     watch:
       options:
         livereload: "<%= yeoman.livereload %>"
       coffee:
         files: ["docs/**/*.coffee"]
-        tasks: ["newer:coffee","prince"]
+        tasks: ["newer:coffee","compile"]
       jade:
         files: ["docs/**/*.jade"]
-        tasks: ["jade","prince"]
+        tasks: ["jade","compile"]
       stylus:
         files: ["docs/**/*.styl"]
-        tasks: ["newer:stylus","prince"]
-      bower:
-        files: ["bower.json"]
-        tasks: ["bowerInstall"]
+        tasks: ["newer:stylus","compile"]
       gruntfile:
         files: ["Gruntfile.coffee"]
         tasks: [
@@ -117,20 +144,25 @@ module.exports = (grunt) ->
       compile:
         files: 
           "./compiled.pdf": ["docs_compiled/index.html"]
-    
-    bowerInstall:
-      target:
-        src: ["docs/index.jade"]   
+        
      
     # Run some tasks in parallel to speed up the build process
     concurrent:
       compile:
         tasks: ["jade","stylus","coffee"]
+  
+  grunt.registerTask "addTocToReadme", "Adds a ToC to the readme", () ->
+    toc = require("marked-toc")
+    table = toc.add("README.md")
+
+  grunt.registerTask "compile", [
+    "jsdom"
+    "prince"
+  ]
 
   grunt.registerTask "default", [
     "clean:compile"
-    "bowerInstall"
     "concurrent"
-    "prince"
+    "compile"
     "watch"
   ]

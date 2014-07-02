@@ -4,6 +4,26 @@ A simple boilerplate to create book-quality pdfs by writing in [Jade](http://jad
 [Coffeescript](http://coffeescript.org/)
 and converting with [Prince][prince]
 
+## Table of Contents
+
+<!-- toc -->
+* [Getting Started](#getting-started)
+  * [Requirements](#requirements)
+  * [Setting up prince](#setting-up-prince)
+  * [Install](#install)
+* [Documentation](#documentation)
+  * [Table of contents](#table-of-contents)
+  * [Figures / Tables](#figures-tables)
+  * [Bibliography](#bibliography)
+  * [Data](#data)
+  * [Scripts](#scripts)
+  * [Style](#style)
+* [Usefull stuff](#usefull-stuff)
+* [Release History](#release-history)
+* [License](#license)
+
+<!-- toc stop -->
+
 ## Getting Started
 ### Requirements
 * [Prince][prince_dl]
@@ -29,7 +49,7 @@ bower install
 
 [prince]: http://www.princexml.com/
 [prince_dl]: http://www.princexml.com/download/
-
+[grunt-jsdom-jquery]: https://github.com/paulpflug/grunt-jsdom-jquery
 ## Documentation
 `grunt` will compile Jade/Stylus/Coffeescript to HTML/CSS/JS and watch for changes.
 
@@ -40,7 +60,7 @@ HTML/CSS/JS will also be converted to `compiled.pdf` by [Prince][prince], which 
 ***Note:*** Several CSS 3 features are not supported by any browser. (Margins, Pagesize, ...)
 
 ### Table of contents
-Put a div with the ID `toc` anywhere and call `window.generateTOC()` on load.
+Put a div with the ID `toc` anywhere.
 This will create a TOC based on the headings you used.
 Links and a pdf specific toc are inclusive and free ;)
 Association:
@@ -52,7 +72,9 @@ h4 - Subsection
 
 `h5` will create a heading with a horizontal line
 
-### Figures
+See [grunt-jsdom-jquery][grunt-jsdom-jquery] for further information.
+
+### Figures / Tables
 ```jade
 figure#horses.pull-left
   img(src="../resources/images/horses.JPG")
@@ -61,8 +83,27 @@ figure#horses.pull-left
 will put a left-floating image in the document
 To make a reference use:
 ```jade
-a.fig(href="#horses")
+a(href="#horses")
 ```
+
+Similar for tables:
+````jade 
+table#name
+  caption String
+# link with
+a(href="#name")
+
+```
+A element with the id `tof` / `tot` will be filled with a table of figures / tables.
+
+See [grunt-jsdom-jquery][grunt-jsdom-jquery] for further information.
+
+### Bibliography
+Put a index.json or index.bib (Bibtex format) next to the index.jade
+
+You can cite with `cite CITEKEY` or inline `#[cite CITEKEY]`.
+
+A element with the id `bib` will be filled with a table of references
 
 ### Data
 You can put arbitrary data in the `index.json` and access it within your `index.jade`
@@ -106,6 +147,7 @@ Note, that it will slow compilation down, so ideally include it only during fina
 
 ## Release History
 
+ - *v0.0.2*: improved support for toc and added bib / tof / tot support
  - *v0.0.1*: First Release
 
 ## License

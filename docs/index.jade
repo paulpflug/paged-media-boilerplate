@@ -10,7 +10,7 @@ html
     script(src='../vendor/jquery/dist/jquery.js')
     // endbower
     script(src='index.js')
-  body(onload="window.generateTOC()")
+  body
     .container
       .emptyPage
       .emptyPage.newCounter
@@ -21,4 +21,6 @@ html
         
       .newCounter
       include chapter1.jade
-    
+      .back-matter
+        h2 References
+        #bib
