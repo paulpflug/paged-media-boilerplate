@@ -3,7 +3,7 @@
 path = require "path"
 util = require "util"
 fs = require "fs"
-
+jade = require "jade"
 
 
 module.exports = (grunt) ->
@@ -109,6 +109,14 @@ module.exports = (grunt) ->
           ext: ".html",
           dest: "docs_compiled/"          
         ]
+      diff: 
+        files: [
+          expand: true,
+          cwd: "tmp/",
+          src: ["index.jade"],
+          ext: ".html",
+          dest: "docs_compiled/"          
+        ]
     stylus:
       compile:
         files: [
@@ -129,7 +137,18 @@ module.exports = (grunt) ->
           debug: true
           script: "server/server.coffee"
 
-    
+    gitdiff:
+      options:
+        prependplus: "span.strongblue " 
+        prependminus:"span.strongred "
+      compile:
+        files: [
+          expand: true,
+          cwd: "docs/",
+          src: ["**/*.jade"],
+          ext: ".jade",
+          dest: "tmp/"   
+        ]
     # Empties folders to start fresh
     clean:
       compile:
@@ -139,7 +158,13 @@ module.exports = (grunt) ->
             "docs_compiled/*"
           ]
         ]
-
+      tmp:
+        files: [
+          dot: true
+          src: [
+            "tmp/*"
+          ]
+        ]
     prince:
       compile:
         files: 
@@ -150,7 +175,8 @@ module.exports = (grunt) ->
     concurrent:
       compile:
         tasks: ["jade","stylus","coffee"]
-  
+      diff:
+        tasks: ["gitdiff","stylus","coffee"]
   grunt.registerTask "addTocToReadme", "Adds a ToC to the readme", () ->
     toc = require("marked-toc")
     table = toc.add("README.md")
@@ -159,10 +185,15 @@ module.exports = (grunt) ->
     "jsdom"
     "prince"
   ]
-
+  grunt.registerTask "diff", [
+    "clean"
+    "concurrent:diff"
+    "jade:diff"
+    "compile"
+  ]
   grunt.registerTask "default", [
     "clean:compile"
-    "concurrent"
+    "concurrent:compile"
     "compile"
     "watch"
   ]

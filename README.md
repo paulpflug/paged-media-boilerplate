@@ -12,13 +12,13 @@ and converting with [Prince][prince]
   * [Setting up prince](#setting-up-prince)
   * [Install](#install)
 * [Documentation](#documentation)
-  * [Table of contents](#table-of-contents)
+  * [Add a table of contents](#add-a-table-of-contents)
   * [Figures / Tables](#figures-tables)
   * [Bibliography](#bibliography)
   * [Data](#data)
   * [Scripts](#scripts)
   * [Style](#style)
-* [Usefull stuff](#usefull-stuff)
+* [Diff](#diff)
 * [Release History](#release-history)
 * [License](#license)
 
@@ -68,7 +68,7 @@ HTML/CSS/JS will also be converted to `compiled.pdf` by [Prince][prince], which 
 
 ***Note:*** Several CSS 3 features are not supported by any browser. (Margins, Pagesize, ...)
 
-### Table of contents
+### Add a table of contents
 Put a div with the ID `toc` anywhere.
 This will create a TOC based on the headings you used.
 Links and a pdf specific toc are inclusive and free ;)
@@ -145,17 +145,13 @@ You can fully customize the style. The current style is located in `docs/index.s
 
 All installed fonts can be used by their name. If you want to make them portable, put them in the `resource` directory and wire them up in the `index.styl` (an example is included).
 
-## Usefull stuff
-Here a very usefull script for hyphenation:
-[hyper](https://github.com/bramstein/hypher) (no bower support)
-Note, that it will slow compilation down, so ideally include it only during finalization.
-
-
+## Diff
+If you use git for versioning, you can compile a pdf containing diffs by issuing `grunt diff`.
 
 
 
 ## Release History
-
+ - *v0.0.3*: Added `diff` grunt task
  - *v0.0.2*: improved support for toc and added bib / tof / tot support
  - *v0.0.1*: First Release
 

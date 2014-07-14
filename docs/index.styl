@@ -6,15 +6,15 @@ colorGrey = #DDD
 fontChapter = "Anonymous pro"
 fontSection =  "ubuntu mono" // "roboto" "Codename Coder Free 4F" "SF Archery Black"
 fontHeading =  "Short Stack" //"PLAYTIME WITH HOT TODDIES""JollyGood Sans Basic" "Days" "Architects Daughter" "Short Stack"
-fontBody = "source code pro" // "roboto" "source code pro"
-fontSizeBody = 11pt
-fontSizeBodyFront = 12pt
-fontSizeQuote = 12pt
-fontSizeMargin = 13pt
-fontSizeHeading = 15pt
-fontSizeSection = 24pt
-fontSizeChapterFront = 45pt
-fontSizeChapter = 60pt
+fontBody = "ubuntu" // "roboto" "source code pro" "ubuntu"
+fontSizeBody = 12pt
+fontSizeBodyFront = 13pt
+fontSizeQuote = 13pt
+fontSizeMargin = 14pt
+fontSizeHeading = 17pt
+fontSizeSection = 26pt
+fontSizeChapterFront = 38pt
+fontSizeChapter = 50pt
 
 
 outerMargin = 25mm
@@ -24,21 +24,24 @@ outerMargin = 25mm
   font-family: fontBody
   background-color: colorBody
   font-size: fontSizeMargin
+.clear
+  clear: both;
 .container
   background-color: colorBody
   width: 21cm - (2*outerMargin)
   margin: auto
   padding: 27mm outerMargin 27mm outerMargin
-body
-  font-family: fontBody
-  background-color: colorGrey
-  text-align justify
-  font-size: fontSizeBody
 @media print
   .container
     width: 100%
     margin: 0
     padding: 0
+body
+  font-family: fontBody
+  background-color: colorGrey
+  text-rendering: optimizeLegibility;
+  font-size: fontSizeBody
+@media print
   body
     background-color: colorBody
 @page :left { 
@@ -51,29 +54,36 @@ body
   counter-reset: page 
   page: empty
 h2 span.chapternumber
-  font-size: 350px
+  font-size: 550px
   position: absolute
-  right: 30px
-  top: -120px
-  color: rgba(colorChapter,0.2)
-h2 
+  right: -30px
+  top: -200px
+  color: rgba(colorChapter,0.1)
+  z-index: 0
+h2
   font-family fontChapter
   font-weight: bold
   color: colorChapter
   page-break-before: right
-  string-set: chapter content()
   counter-reset: figure section
   counter-increment: chapter
   font-size:fontSizeChapter
   position: relative
-  margin-top:35px
+  margin-top:300px
   margin-bottom: 70px
+@media print
+  h2
+    margin-top: 40px
+h2 span.chaptertext
+  string-set: chapter counter(chapter) " | "  content()
 h3 
   font-family fontSection
   color: colorSection
   counter-increment: section
-  string-set: section content()
+  
   font-size:fontSizeSection
+h3 span.sectiontext
+  string-set: section counter(chapter) "." counter(section) " " content()
 h5 
   color colorHeading
   border-bottom: 2px colorHeading solid
@@ -89,9 +99,9 @@ h3 { bookmark-level: 2 }
 h5 { bookmark-level: 3 }
 
 
-@page empty 
-  @top-right 
-    content: normal 
+@page empty
+  @top-right
+    content: normal
   @top-left 
     content: normal  
   @bottom-right 
@@ -112,7 +122,7 @@ h5 { bookmark-level: 3 }
   @top-left
     font-family fontSection
     color: colorSection
-    content: counter(chapter) "." counter(section) " " string(section)
+    content: string(section)
     
   @bottom-left 
     content: counter(page)
@@ -122,7 +132,7 @@ h5 { bookmark-level: 3 }
     font-weight: bold
     font-family fontChapter
     color: colorChapter
-    content: counter(chapter) " | " string(chapter)
+    content: string(chapter)
   @bottom-right 
     content: counter(page)
 
@@ -185,7 +195,9 @@ img
 img.dpi300
   zoom 32%
   image-resolution: 300dpi
-
+img.dpi150
+  zoom 64%
+  image-resolution: 150dpi
 figcaption span.figurenumber,
 a span.figurenumber,
 a span.figurereftext
@@ -204,13 +216,20 @@ figure figcaption
   margin-top: 8px
   display: table-caption
   caption-side:bottom
+  padding: 0 15px
+  text-align: justify
+figure.pull-left figcaption,
+figure.pull-right figcaption  
+  padding: 0
 figure.pull-left
   margin-right 18px
   width: auto
 figure.pull-right
   margin-left 18px
   width: auto
-
+p
+  z-index: 10
+  text-align justify
 p,ul, li.toc.chapter
   margin-bottom: 10px
   margin-top: 0px
@@ -218,6 +237,7 @@ p,ul, li.toc.chapter
 p + ul
   margin-top: -5px
 a
+  z-index: 100
   color #000
   text-decoration: none
 blockquote
@@ -225,15 +245,17 @@ blockquote
   padding-left: 0
   border-right: 5px solid colorChapter
   border-left: 0
+  margin-right: 0
   text-align: right
   font-size: fontSizeQuote
 blockquote cite
   color: colorHeading
   font-size: fontSizeBody
   font-style: normal
+span.dash,
 blockquote cite:after 
-  content: '\00A0 \2014'
-
+  content: ' \2013'
+  font-family: "Verdana"
 ul
   list-style: none;
   padding-left: 30px
@@ -246,7 +268,9 @@ ul > li:before
 ul > li
   padding-bottom: 4px
   position: relative
-
+li > br + i
+  padding: 5px 0 12px 0
+  display: block;
 cite span.citenumber 
   vertical-align:top; 
   font-size:0.7em; 
@@ -272,5 +296,15 @@ span.biburl
   font-weight: normal;
   font-style: normal;
 }
-
-
+span.sc
+  font-feature-settings: 'smcp'
+  font-variant-caps: small-caps;
+  font-variant: small-caps;
+span.tc
+  letter-spacing: 0.2em;
+span.strongred,
+span.strongred *
+  color:red !important
+span.strongblue,
+span.strongblue *
+  color:blue !important

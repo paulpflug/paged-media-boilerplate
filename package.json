@@ -1,6 +1,6 @@
 {
   "name": "paged-media-boilerplate",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "coffee-script": "^1.7.1",
     "express": "^4.4.1"
@@ -18,6 +18,7 @@
     "grunt-express-server": "^0.4.17",
     "grunt-contrib-coffee": "~0.10.1",
     "grunt-jsdom-jquery": "*",
+    "grunt-git-diff": "*",
     "grunt-prince":"*",
     "grunt-newer": "~0.7.0",
     "load-grunt-tasks": "~0.4.0",
